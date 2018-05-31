@@ -4,7 +4,7 @@ If you find this helpful, I would be grateful if you could give me a star.
 
 Run this app
 
-Clone or download this repo
-Run npm install
-Run npm run build
-Run npm start
+1. Clone or download this repo
+2. Run npm install
+3. Run npm run build
+4. Run npm start
