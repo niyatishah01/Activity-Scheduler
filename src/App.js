@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap'; 
+import {ButtonToolbar, DropdownButton, MenuItem, Tabs, Tab, Jumbotron} from 'react-bootstrap';
+import moment from 'moment';
 
 class App extends Component {
 
@@ -12,7 +13,7 @@ class App extends Component {
       companys: [],
       activitys: [],
       associations: [],
-      cname: 'Companies'
+      cname: 'Choose a company'
     };
 
     this.handleCompanySelect = this.handleCompanySelect.bind(this)
@@ -46,6 +47,9 @@ class App extends Component {
   render() {
     return (
       <div class="container">
+      <Jumbotron>
+      <Tabs bsStyle="pills" defaultActiveKey={3} justified id="uncontrolled-tab-example">
+        <Tab eventKey={1} title="Company">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
@@ -69,28 +73,36 @@ class App extends Component {
               </tbody>
             </table>
           </div>
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              ACTIVITY LIST
-            </h3>
           </div>
-          <div class="panel-body">
-            <h4><Link to="/CreateActivity"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Activity</Link></h4>
-            <table class="table table-stripe">
-              <thead>
+        </Tab>
+        <Tab eventKey={2} title="Activity">
+        <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            ACTIVITY LIST
+          </h3>
+        </div>
+        <div class="panel-body">
+          <h4><Link to="/CreateActivity"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Activity</Link></h4>
+          <table class="table table-stripe">
+            <thead>
+              <tr>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.activitys.map(activity =>
                 <tr>
-                  <th>Name</th>
+                  <td><Link to={`/showActivity/${activity._id}`}>{activity.aname}</Link></td>
                 </tr>
-              </thead>
-              <tbody>
-                {this.state.activitys.map(activity =>
-                  <tr>
-                    <td><Link to={`/showActivity/${activity._id}`}>{activity.aname}</Link></td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+              )}
+            </tbody>
+          </table>
+        </div>
+        </div>
+        </Tab>
+        <Tab eventKey={3} title="Association">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
               ALL ACTIVITIES IN ALL COMPANIES
@@ -99,7 +111,7 @@ class App extends Component {
           <div class="panel-body">
             <h4><Link to="/CreateAssociation"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Association</Link></h4>
             <ButtonToolbar>
-              <DropdownButton title={this.state.cname} id="dropdown-company">
+              <DropdownButton bsStyle="primary" title={this.state.cname} id="dropdown-company">
                 {
                   this.state.companys.map(company => {
                     return <MenuItem eventKey={company.name} onSelect={this.handleCompanySelect}>{company.name}</MenuItem>
@@ -112,23 +124,27 @@ class App extends Component {
                 <tr>
                   <th>Company Name</th>
                   <th>Activity Name</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
+                  <th>Start Date and Time</th>
+                  <th>End Date and Time</th>
                 </tr>
               </thead>
               <tbody>
                 {this.state.associations.map(association =>
-                    (this.state.cname === 'Companies' || this.state.cname === association.cname) && <tr>
+                    (this.state.cname === 'Choose a company' || this.state.cname === association.cname) && <tr>
                     <td><Link to={`/showAssociation/${association._id}`}>{association.cname}</Link></td>
                     <td><Link to={`/showAssociation/${association._id}`}>{association.aname}</Link></td>
-                    <td><Link to={`/showAssociation/${association._id}`}>{association.startTime}</Link></td>
-                    <td><Link to={`/showAssociation/${association._id}`}>{association.endTime}</Link></td>
+                    <td><Link to={`/showAssociation/${association._id}`}>{moment(association.startDate).format('MMMM Do YYYY, h:mm:ss a')}</Link></td>
+                    <td><Link to={`/showAssociation/${association._id}`}>{moment(association.endDate).format('MMMM Do YYYY, h:mm:ss a')}</Link></td>
+
                   </tr>
                 )}
               </tbody>
             </table>
-          </div>
-        </div>
+            </div>
+            </div>
+        </Tab>
+      </Tabs>
+      </Jumbotron>
       </div>
     );
   }

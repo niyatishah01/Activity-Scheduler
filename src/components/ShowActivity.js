@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 class ShowActivity extends Component {
 
@@ -38,10 +39,9 @@ class ShowActivity extends Component {
           </div>
           <div class="panel-body">
             <h4><Link to="/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Activity List</Link></h4>
-            <dl>
-              <dt>Activity Name:</dt>
-              <dd>{this.state.activity.aname}</dd>
-            </dl>
+            <ListGroup>
+              <ListGroupItem header="Activity Name">{this.state.activity.aname}</ListGroupItem>
+            </ListGroup>
             <Link to={`/editActivity/${this.state.activity._id}`} class="btn btn-success">Edit</Link>&nbsp;
             <button onClick={this.delete.bind(this, this.state.activity._id)} class="btn btn-danger">Delete</button>
           </div>

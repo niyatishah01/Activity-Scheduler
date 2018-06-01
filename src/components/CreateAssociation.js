@@ -3,22 +3,27 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
 
 class CreateAssociation extends Component {
 
-  constructor() {
+  constructor() { // Attributes and functions related to association
     super();
     this.state = {
       cname: 'Companies',
       aname: 'Activities',
-      startTime:'',
-      endTime:'',
+      startDate:'',
+      endDate:'',
       company: [],
       activity: []
     };
 
     this.handleCompanySelect = this.handleCompanySelect.bind(this);
     this.handleActivitySelect = this.handleActivitySelect.bind(this);
+    this.handleStartDateChange = this.handleStartDateChange.bind(this);
+    this.handleEndDateChange = this.handleEndDateChange.bind(this);
   }
 
   onChange = (e) => {
@@ -39,6 +44,17 @@ class CreateAssociation extends Component {
       }));
   }
 
+  handleStartDateChange(startDate) {
+      this.setState({
+        startDate
+      })
+  }
+  handleEndDateChange(endDate) {
+      this.setState({
+        endDate
+      })
+  }
+
   handleCompanySelect(cname) {
       this.setState({
         cname
@@ -54,16 +70,24 @@ class CreateAssociation extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const {cname,aname,startTime,endTime} = this.state;
+    const {cname,aname,startDate,endDate} = this.state;
+    // const newStartDate = moment(startDate).format('MMMM Do YYYY, h:mm:ss a');
+    // const newEndDate = moment(endDate).format('MMMM Do YYYY, h:mm:ss a');
+    const newStartDate = moment(startDate).toISOString()
+    const newEndDate = moment(endDate).toISOString()
 
-    axios.post('/api/association', {cname,aname,startTime,endTime})
-      .then((result) => {
+    axios.post('/api/association', {
+      cname,
+      aname,
+      startDate: newStartDate,
+      endDate: newEndDate
+    }).then((result) => {
         this.props.history.push("/")
       });
   }
 
   render() {
-    const {cname,aname,startTime,endTime} = this.state;
+    const {cname,aname,startDate,endDate} = this.state;
     return (
       <div class="container">
         <div class="panel panel-default">
@@ -95,15 +119,25 @@ class CreateAssociation extends Component {
                 </DropdownButton>
               </ButtonToolbar>
 
-              <div class="form-group">
-                <label for="startTime">Start Time:</label>
-                <input type="time" class="form-control" name="startTime" value={startTime} onChange={this.onChange} placeholder="Start Time" />
-              </div>
-              <div class="form-group">
-                <label for="endTime">End Time:</label>
-                <input type="time" class="form-control" name="endTime" value={endTime} onChange={this.onChange} placeholder="End Time" />
-              </div>
-              <button type="submit" class="btn btn-default">Submit</button>
+                <div class="form-group">
+                    <label for="startDate">Start Date:</label>
+                    <DatePicker
+                    selected={this.state.startDate}
+                    onChange={this.handleStartDateChange}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    dateFormat="LLL"
+                    timeCaption="Time"/>
+                <label for="endDate">End Date:</label>
+                    <DatePicker
+                    selected={this.state.endDate}
+                    onChange={this.handleEndDateChange}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    dateFormat="LLL"
+                    timeCaption="Time"/>
+                  </div>
+              <button type="submit" class="btn btn-primary">Create Schedule</button>
             </form>
           </div>
         </div>

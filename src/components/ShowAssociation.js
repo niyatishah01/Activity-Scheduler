@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import moment from 'moment';
 
 class ShowAssociation extends Component {
 
@@ -38,16 +40,12 @@ class ShowAssociation extends Component {
           </div>
           <div class="panel-body">
             <h4><Link to="/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Association List</Link></h4>
-            <dl>
-              <dt>Company Name:</dt>
-              <dd>{this.state.association.cname}</dd>
-              <dt>Activity Name:</dt>
-              <dd>{this.state.association.aname}</dd>
-              <dt>Start Time:</dt>
-              <dd>{this.state.association.startTime}</dd>
-              <dt>End Time:</dt>
-              <dd>{this.state.association.endTime}</dd>
-            </dl>
+            <ListGroup>
+              <ListGroupItem header="Company Name">{this.state.association.cname}</ListGroupItem>
+              <ListGroupItem header="Activity Name">{this.state.association.aname}</ListGroupItem>
+              <ListGroupItem header="Start Date">{moment(this.state.association.startDate).format('MMMM Do YYYY, h:mm:ss a')}</ListGroupItem>
+              <ListGroupItem header="End Date">{moment(this.state.association.endDate).format('MMMM Do YYYY, h:mm:ss a')}</ListGroupItem>
+            </ListGroup>
             <Link to={`/editAssociation/${this.state.association._id}`} class="btn btn-success">Edit</Link>&nbsp;
             <button onClick={this.delete.bind(this, this.state.association._id)} class="btn btn-danger">Delete</button>
           </div>

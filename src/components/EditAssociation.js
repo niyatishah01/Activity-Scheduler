@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
 
 class EditAssociation extends Component {
 
@@ -10,13 +13,15 @@ class EditAssociation extends Component {
     this.state = {
       cname: 'Companies',
       aname: 'Activities',
-      startTime:'',
-      endTime:'',
+      newStartDate: '',
+      newEndDate: '',
       company: [],
       activity: []
     };
     this.handleCompanySelect = this.handleCompanySelect.bind(this)
     this.handleActivitySelect = this.handleActivitySelect.bind(this)
+    this.handleStartDateChange = this.handleStartDateChange.bind(this);
+    this.handleEndDateChange = this.handleEndDateChange.bind(this);
   }
 
   componentDidMount() {
@@ -25,8 +30,8 @@ class EditAssociation extends Component {
         this.setState({
           cname: res.data.cname,
           aname: res.data.aname,
-          startTime:res.data.startTime,
-          endTime:res.data.endTime
+          newStartDate: moment(res.data.startDate),
+          newEndDate: moment(res.data.endDate)
         });
 
       });
@@ -52,6 +57,17 @@ class EditAssociation extends Component {
       })
   }
 
+  handleStartDateChange(newStartDate) {
+      this.setState({
+        newStartDate
+      })
+  }
+  handleEndDateChange(newEndDate) {
+      this.setState({
+        newEndDate
+      })
+  }
+
   handleActivitySelect(aname) {
     this.setState({
       aname
@@ -61,17 +77,26 @@ class EditAssociation extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const {cname,aname,startTime,endTime } = this.state;
+    const {cname,aname,newStartDate,newEndDate} = this.state;
+    // const newStartDateObj = new Date(startDate);
+    // const newStartDate = moment(newStartDateObj).format('MMMM Do YYYY, h:mm:ss a');
+    // const newEndDateObj = new Date(endDate);
+    // const newEndDate = moment(newEndDateObj).format('MMMM Do YYYY, h:mm:ss a');
 
-    axios.put('/api/association/'+this.props.match.params.id, {cname,aname,startTime,endTime })
-      .then((result) => {
+    const startDate = moment(newStartDate).toISOString()
+    const endDate = moment(newEndDate).toISOString()
+    axios.put('/api/association/'+this.props.match.params.id, {
+      cname,
+      aname,
+      startDate,
+      endDate
+    }).then((result) => {
         this.props.history.push("/showAssociation/"+this.props.match.params.id)
       });
   }
 
   render() {
-    const {cname,aname,startTime,endTime} = this.state;
-
+    const {cname,aname} = this.state;
     return (
       <div class="container">
         <div class="panel panel-default">
@@ -81,7 +106,7 @@ class EditAssociation extends Component {
             </h3>
           </div>
           <div class="panel-body">
-            <h4><Link to={`/showAssociation/${this.state._id}`}><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Association List</Link></h4>
+            <h4><Link to="/"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Association List</Link></h4>
             <form onSubmit={this.onSubmit}>
               <ButtonToolbar>
                 <DropdownButton title={cname} id="dropdown-company" >
@@ -104,14 +129,25 @@ class EditAssociation extends Component {
               </ButtonToolbar>
 
               <div class="form-group">
-                <label for="startTime">Start Time:</label>
-                <input type="time" class="form-control" name="startTime" value={startTime} onChange={this.onChange} placeholder="Start Time" />
-              </div>
-              <div class="form-group">
-                <label for="endTime">End Time:</label>
-                <input type="time" class="form-control" name="endTime" value={endTime} onChange={this.onChange} placeholder="End Time" />
-              </div>
-              <button type="submit" class="btn btn-default">Submit</button>
+                  <label for="startDate">Start Date:</label>
+                  <DatePicker
+                  selected={this.state.newStartDate}
+                  onChange={this.handleStartDateChange}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  dateFormat="LLL"
+                  timeCaption="Time"/>
+              <label for="endDate">End Date:</label>
+                  <DatePicker
+                  selected={this.state.newEndDate}
+                  onChange={this.handleEndDateChange}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  dateFormat="LLL"
+                  timeCaption="Time"/>
+                </div>
+
+              <button type="submit" class="btn btn-success">Save Changes</button>
             </form>
           </div>
         </div>

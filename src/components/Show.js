@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 class Show extends Component {
 
@@ -38,10 +39,9 @@ class Show extends Component {
           </div>
           <div class="panel-body">
             <h4><Link to="/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Company List</Link></h4>
-            <dl>
-              <dt>Company Name:</dt>
-              <dd>{this.state.company.name}</dd>
-            </dl>
+            <ListGroup>
+              <ListGroupItem header="Company Name">{this.state.company.name}</ListGroupItem>
+            </ListGroup>
             <Link to={`/edit/${this.state.company._id}`} class="btn btn-success">Edit</Link>&nbsp;
             <button onClick={this.delete.bind(this, this.state.company._id)} class="btn btn-danger">Delete</button>
           </div>

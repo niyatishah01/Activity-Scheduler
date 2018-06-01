@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+const mongoose-fire = require('mongoose-fire');
 
 var Schema=  mongoose.Schema;
 
@@ -7,3 +8,4 @@ var CompanySchema = new Schema({
 });
 
 module.exports = mongoose.model('Company', CompanySchema);
+CompanySchema.plugin(mongoose-fire);

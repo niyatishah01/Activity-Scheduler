@@ -2,4 +2,10 @@ body {
   margin: 20px 0;
   padding: 0;
   font-family: sans-serif;
+  background-image: url('components/stripes-light.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+ul.react-datepicker__time-list{
+  -webkit-padding-start: 0px !important;
 }
