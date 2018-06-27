@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-const mongoose-fire = require('mongoose-fire');
 
 var Schema=  mongoose.Schema;
 
