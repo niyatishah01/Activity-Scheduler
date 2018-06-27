@@ -7,4 +7,4 @@ var ActivitySchema = new Schema({
 });
 
 module.exports = mongoose.model('Activity', ActivitySchema);
-ActivitySchema.plugin(mongoose-fire);
+
