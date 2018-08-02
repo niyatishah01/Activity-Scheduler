@@ -17,14 +17,7 @@
 	<allow-intent href="mailto:*"/>
 	<allow-intent href="geo:*"/>
 	<allow-intent href="maps:*"/>
-	<plugin name="cordova-plugin-app-version" source="npm"/>
-	<plugin name="org.apache.cordova.statusbar" source="npm"/>
-	<gap:plugin name="cordova-plugin-whitelist" source="npm"/>
-	<gap:plugin name="cordova-plugin-splashscreen" source="npm"/>
-	<plugin name="cordova-plugin-file" spec="~4.3.3" source="npm"/>
-	<plugin name="cordova-plugin-inappbrowser" source="npm"/>
-	<plugin name="cordova-plugin-talk-to-me-cordova" spec="https://github.com/macdonst/SpeechSynthesisPlugin" />
-	<platform name="android">
+		<platform name="android">
 		<preference name="AndroidPersistentFileLocation" value="Compatibility"/>
 		<allow-intent href="market:*"/>
 	</platform>
