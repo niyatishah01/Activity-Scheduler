@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget id="com.bententech.tracon" android-versionCode="62" ios-CFBundleVersion="1.0.60" version="1.0.60" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+	<name>Trac-On</name>
+	<description>
+		Trac-On
+	</description>
+	<preference name="fullscreen" value="false"/>
+	<preference name="orientation" value="all"/>
+	<preference name="android-build-tool" value="gradle"/>
+	<preference name="DisallowOverscroll" value="true"/>
+
+	<content src="index.html"/>
+	<allow-intent href="http://*/*"/>
+	<allow-intent href="https://*/*"/>
+	<allow-intent href="tel:*"/>
+	<allow-intent href="sms:*"/>
+	<allow-intent href="mailto:*"/>
+	<allow-intent href="geo:*"/>
+	<allow-intent href="maps:*"/>
+	<plugin name="cordova-plugin-app-version" source="npm"/>
+	<plugin name="org.apache.cordova.statusbar" source="npm"/>
+	<gap:plugin name="cordova-plugin-whitelist" source="npm"/>
+	<gap:plugin name="cordova-plugin-splashscreen" source="npm"/>
+	<plugin name="cordova-plugin-file" spec="~4.3.3" source="npm"/>
+	<plugin name="cordova-plugin-inappbrowser" source="npm"/>
+	<plugin name="cordova-plugin-talk-to-me-cordova" spec="https://github.com/macdonst/SpeechSynthesisPlugin" />
+	<platform name="android">
+		<preference name="AndroidPersistentFileLocation" value="Compatibility"/>
+		<allow-intent href="market:*"/>
+	</platform>
+	<platform name="ios">
+		<preference name="StatusBarOverlaysWebView" value="false"/>
+		<preference name="StatusBarBackgroundColor" value="transparent"/>
+		<preference name="iosPersistentFileLocation" value="Compatibility"/>
+		<allow-intent href="itms:*"/>
+		<allow-intent href="itms-apps:*"/>
+	</platform>
+	<allow-navigation href="*" />
+	<access origin="*"/>
+</widget>
