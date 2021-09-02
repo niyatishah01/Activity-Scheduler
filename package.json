@@ -10,7 +10,7 @@
     "body-parser": "^1.18.2",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "express": "^4.16.2",
-    "mongoose": "^5.12.2",
+    "mongoose": "^6.0.4",
     "mongoose-fire": "0.0.1",
     "morgan": "^1.9.0",
     "react": "^16.13.1",
@@ -18,7 +18,7 @@
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.14",
+    "react-scripts": "1.1.1",
     "serve-favicon": "^2.4.5"
   },
   "scripts": {
